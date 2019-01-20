@@ -2,5 +2,9 @@
   "version": 2,
   "builds": [
     { "src": "package.json", "use": "@now/next" }
+  ],
+  "alias": ["next.zmooth.io"],
+  "routes": [
+    { "src": "/store/(?<id>[^/]*)", "dest": "/product?id=$id" }
   ]
 }
