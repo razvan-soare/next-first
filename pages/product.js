@@ -1,16 +1,24 @@
-import Layout from '../components/MyLayout.js'
-import Link from 'next/link'
-import fetch from 'isomorphic-unfetch'
+import React, { Component } from 'react'
+import cachedFetch, { overrideCache } from '../lib/cached-json-fetch';
 
-const Store = (props) => (
-  <Layout>
-    <h1>{props.product.name}</h1>
-  </Layout>
-)
+class Product extends Component {
+  componentDidMount() {
+    if (this.props.isServerRendered) {
+      overrideCache(`https://store.bryant.dental/api/rest/products/${this.props.id}`, this.props.product);
+    }
+  }
+  render() {
+    const { product } = this.props;
+    return (
+      <h1>{product.name}</h1>
+    )
+  }
+}
 
-Store.getInitialProps = async function(context) {
-  const { id } = context.query
-  const res = await fetch(`https://store.bryant.dental/api/rest/products/${id}`, {
+Product.getInitialProps = async function({ query, req }) {
+  const { id } = query;
+
+  const product = await cachedFetch(`https://store.bryant.dental/api/rest/products/${id}`, {
     method: 'GET',
     headers: {
       'X-Oc-Session': 'fe5c4db67fb053c14a24d12a05',
@@ -18,13 +26,9 @@ Store.getInitialProps = async function(context) {
       'X-Oc-Currency': 'GBP',
       'X-Oc-Merchant-Id': 'ODUdrFUGCpx2pOrSxd6IhelaI2ge7aQV',
     },
-  })
-  // const res = await fetch('https://store.bryant.dental/api/rest/products')
-  const data = await res.json()
-
-  return {
-    product: data.data
-  }
+  });
+  const isServerRendered = !!req;
+  return { product: product.data, isServerRendered, id };
 }
 
-export default Store
+export default Product
