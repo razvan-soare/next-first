@@ -7,7 +7,12 @@ const Store = (props) => (
     <ul>
       {props.products.map((prod) => (
         <li key={prod.id}>
-          <Link as={`/store/${prod.id}`} href={`/product?id=${prod.id}`}>
+          <Link
+            prefetch
+            withData
+            as={`/store/${prod.id}`}
+            href={`/product?id=${prod.id}`}
+          >
             <a>{prod.name || prod.title}</a>
           </Link>
         </li>
