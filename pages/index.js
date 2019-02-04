@@ -4,7 +4,7 @@ import Link from 'next/link'
 const Index = () => (
   <React.Fragment>
     <h1>Prods</h1>
-    <Link href='/store' prefetch>
+    <Link href='/store' withData prefetch>
       <a>See store</a>
     </Link>
     
