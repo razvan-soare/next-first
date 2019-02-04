@@ -22,6 +22,7 @@ const Store = (props) => (
 )
 
 Store.getInitialProps = async function() {
+  console.log('IM CALLED ONCE')
   const res = await fetch('https://store.bryant.dental/api/rest/products', {
     method: 'GET',
     headers: {
