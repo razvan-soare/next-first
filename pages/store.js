@@ -1,20 +1,19 @@
-import Layout from '../components/MyLayout.js'
 import Link from 'next/link'
 import fetch from 'isomorphic-unfetch'
 
 const Store = (props) => (
-  <Layout>
+  <React.Fragment>
     <h1>Prods</h1>
     <ul>
       {props.products.map((prod) => (
         <li key={prod.id}>
-          <Link prefetch as={`/store/${prod.id}`} href={`/product?id=${prod.id}`}>
+          <Link as={`/store/${prod.id}`} href={`/product?id=${prod.id}`}>
             <a>{prod.name || prod.title}</a>
           </Link>
         </li>
       ))}
     </ul>
-  </Layout>
+  </React.Fragment>
 )
 
 Store.getInitialProps = async function() {

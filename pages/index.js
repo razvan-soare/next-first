@@ -1,14 +1,14 @@
-import Layout from '../components/MyLayout.js'
+import React from 'react';
 import Link from 'next/link'
 
 const Index = () => (
-  <Layout>
+  <React.Fragment>
     <h1>Prods</h1>
     <Link href='/store' prefetch>
       <a>See store</a>
     </Link>
     
-  </Layout>
+  </React.Fragment>
 )
 
 export default Index
