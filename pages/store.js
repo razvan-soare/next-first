@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from 'data-prefetch-link'
 import fetch from 'isomorphic-unfetch'
 
 const Store = (props) => (
