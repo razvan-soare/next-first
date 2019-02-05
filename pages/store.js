@@ -1,15 +1,9 @@
 import Link from 'data-prefetch-link'
-import cachedFetch, { overrideCache } from '../lib/cached-json-fetch';
+import fetch from 'isomorphic-unfetch';
 
 import React, { Component } from 'react'
 
 class Store extends Component {
-  componentDidMount() {
-    const { products, isServerRendered } = this.props;
-    if (isServerRendered) {
-      overrideCache('https://store.bryant.dental/api/rest/products', products);
-    }
-  }
   render() {
     const { products } = this.props;
     if (!products) {
@@ -38,7 +32,7 @@ class Store extends Component {
 }
 
 Store.getInitialProps = async function({ req }) {
-  const products = await cachedFetch('https://store.bryant.dental/api/rest/products', {
+  const products = await fetch('https://store.bryant.dental/api/rest/products', {
     method: 'GET',
     headers: {
       'X-Oc-Session': 'fe5c4db67fb053c14a24d12a05',
