@@ -12,6 +12,9 @@ class Article extends Component {
   }
   render() {
     const { html, css } = this.props;
+    if (!html || !css) {
+      return <h1>There is a problem with html or css fetch</h1>
+    }
     return (
       <React.Fragment>
         <style>{css}</style>
@@ -30,7 +33,7 @@ Article.getInitialProps = async function({ req }) {
   );
 
   const isServerRendered = !!req;
-  return { html: article.gjshtml, css: article.gjscss, isServerRendered };
+  return { article, html: article.gjshtml, css: article.gjscss, isServerRendered };
 };
 
 export default Article;

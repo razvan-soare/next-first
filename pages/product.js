@@ -10,7 +10,7 @@ class Product extends Component {
   render() {
     const { product } = this.props;
     return (
-      <h1>{product.name}</h1>
+      <h1>{product ? product.data.name : 'Problem with product name'}</h1>
     )
   }
 }
@@ -28,7 +28,7 @@ Product.getInitialProps = async function({ query, req }) {
     },
   });
   const isServerRendered = !!req;
-  return { product: product.data, isServerRendered, id };
+  return { product, isServerRendered, id };
 }
 
 export default Product

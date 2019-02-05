@@ -5,7 +5,7 @@ class About2 extends Component {
   render() {
     const { product } = this.props;
     return (
-      <h1>{product.name}</h1>
+      <h1>{product ? product.data.name : "There was a problem with product name"}</h1>
     )
   }
 }
@@ -23,7 +23,7 @@ About2.getInitialProps = async function(context) {
     },
   }).then(res => res.json());
 
-  return { product: product.data };
+  return { product };
 }
 
 export default About2;

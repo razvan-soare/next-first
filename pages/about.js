@@ -6,11 +6,14 @@ import React, { Component } from 'react'
 class About extends Component {
   render() {
     const { products } = this.props;
+    if (!products) {
+      return <h1>There are no products something went wrong</h1>
+    }
     return (
       <React.Fragment>
         <h1>Prods</h1>
         <ul>
-          {products.map((prod) => (
+          {products.data.map((prod) => (
             <li key={prod.id}>
               <Link
                 as={`/about/${prod.id}`}
@@ -36,8 +39,7 @@ About.getInitialProps = async function() {
       'X-Oc-Merchant-Id': 'ODUdrFUGCpx2pOrSxd6IhelaI2ge7aQV',
     },
   }).then(res => res.json());
-  console.log(products)
-  return { products: products.data };
+  return { products };
 }
 
 export default About

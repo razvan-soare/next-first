@@ -5,17 +5,21 @@ import React, { Component } from 'react'
 
 class Store extends Component {
   componentDidMount() {
-    if (this.props.isServerRendered) {
-      overrideCache('https://store.bryant.dental/api/rest/products', this.props.products);
+    const { products, isServerRendered } = this.props;
+    if (isServerRendered) {
+      overrideCache('https://store.bryant.dental/api/rest/products', products);
     }
   }
   render() {
     const { products } = this.props;
+    if (!products) {
+      return <h1>there are no products something went wrong</h1>;
+    }
     return (
       <React.Fragment>
         <h1>Prods</h1>
         <ul>
-          {products.map((prod) => (
+          {products.data.map((prod) => (
             <li key={prod.id}>
               <Link
                 prefetch
@@ -44,7 +48,8 @@ Store.getInitialProps = async function({ req }) {
     },
   });
   const isServerRendered = !!req;
-  return { products: products.data, isServerRendered };
+
+  return { products, isServerRendered };
 }
 
 export default Store
